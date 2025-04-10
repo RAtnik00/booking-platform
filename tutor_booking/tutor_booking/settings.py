@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts'
+    'tutors'
 ]
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
