@@ -21,5 +21,5 @@ class TutorProfile(models.Model):
     )
     bio = models.TextField(blank=True)
     experience_years = models.PositiveIntegerField(blank=True, null=True)
-    subjects = models.CharField(max_length=255)
-    price_per_hour = models.DecimalField(max_digits=6, decimal_places=2)
+    subjects = models.CharField(max_length=255, blank=True, default="")
+    price_per_hour = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
