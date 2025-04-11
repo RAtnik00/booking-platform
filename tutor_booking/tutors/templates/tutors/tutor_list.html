@@ -1,5 +1,11 @@
+<h1>List of tutors</h1>
+
 {% for tutor in tutors %}
-    {{ tutor.username }}
-    {{ tutor.tutor_profile.subjects }}
-    {{ tutor.tutor_profile.experience_years }}
+    <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
+        <h2>{{ tutor.username }}</h2>
+        <p><strong>Bio:</strong> {{ tutor.tutor_profile.bio }}</p>
+        <p><strong>Subjects:</strong> {{ tutor.tutor_profile.subjects }}</p>
+        <p><strong>Experience year:</strong> {{ tutor.tutor_profile.experience_years }} лет</p>
+        <p><strong>Price:</strong> {{ tutor.tutor_profile.price_per_hour }}₽</p>
+    </div>
 {% endfor %}
