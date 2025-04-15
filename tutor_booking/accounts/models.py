@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = (
@@ -9,9 +10,14 @@ class CustomUser(AbstractUser):
     )
 
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    slug = models.SlugField(blank=True, unique=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.username)
+        super().save(*args, **kwargs)
 
 class TutorProfile(models.Model):
     user = models.OneToOneField(
