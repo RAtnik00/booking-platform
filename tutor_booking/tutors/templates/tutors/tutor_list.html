@@ -1,7 +1,16 @@
 <h1>List of tutors</h1>
 
+<div style="margin-bottom: 20px;">
+    <form method="get">
+        <input type="search" name="q" placeholder="name" value="{{ request.GET.q }}">
+        <input type="text" name="subject" placeholder="Subject" value="{{ request.GET.subject }}">
+        <input type="number" name="max_price" placeholder="Up to $..." value="{{ request.GET.max_price }}">
+        <button type="submit">Find</button>
+    </form>
+</div>
+
 {% for tutor in tutors %}
-    <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
+    <div style="margin-bottom: 20px;">
         <h2><a href="{% url 'tutor_detail' tutor.slug %}">{{ tutor.username }}</a></h2>
     </div>
 {% endfor %}
