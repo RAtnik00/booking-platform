@@ -3,9 +3,5 @@
 {% for tutor in tutors %}
     <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
         <h2><a href="{% url 'tutor_detail' tutor.slug %}">{{ tutor.username }}</a></h2>
-        <p><strong>Bio:</strong> {{ tutor.tutor_profile.bio }}</p>
-        <p><strong>Subjects:</strong> {{ tutor.tutor_profile.subjects }}</p>
-        <p><strong>Experience:</strong> {{ tutor.tutor_profile.experience_years }} year</p>
-        <p><strong>Price:</strong> {{ tutor.tutor_profile.price_per_hour }}$</p>
     </div>
 {% endfor %}
