@@ -1,5 +1,5 @@
-from accounts.models import CustomUser
-from django.http import HttpResponse, HttpResponseRedirect
+from .models import CustomUser
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Booking
 
