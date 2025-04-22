@@ -1,6 +1,6 @@
 from accounts.models import CustomUser
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Booking
 from datetime import datetime
 
@@ -51,3 +51,16 @@ def tutor_detail(request, slug):
 
     context = {'tutor': tutor}
     return render(request, 'tutors/tutor_detail.html', context)
+
+def my_bookings(request):
+    if not request.user.is_authenticated:
+        return  redirect('tutor_list')
+
+    if request.user.role == 'student':
+        bookings = Booking.objects.filter(student=request.user)
+    elif request.user.role == 'tutor':
+        bookings = Booking.objects.filter(tutor=request.user)
+    else:
+        bookings = Booking.objects.none()
+
+    return render(request, 'tutors/my_bookings.html', {'bookings': bookings})
