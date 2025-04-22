@@ -5,11 +5,11 @@
 <p><strong>Experience:</strong> {{ tutor.tutor_profile.experience_years }} year</p>
 <p><strong>Price:</strong> {{ tutor.tutor_profile.price_per_hour }}$</p>
 
-<a href="{% url 'tutor_list' %}">← Back to list</a>
-
 <form method="post">
     {% csrf_token %}
     <label id="datetime">Date and time of the lesson:</label>
     <input type="datetime-local" name="datetime" required>
     <button type="submit">To enrol</button>
 </form>
+
+<a href="{% url 'tutor_list' %}" style="margin-top: 10px; display: inline-block;">← Back to list</a>

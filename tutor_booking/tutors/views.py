@@ -1,7 +1,8 @@
-from .models import CustomUser
+from accounts.models import CustomUser
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Booking
+from datetime import datetime
 
 def tutor_list(request):
     filters = {}
@@ -25,18 +26,28 @@ def tutor_list(request):
     return render(request, 'tutors/tutor_list.html', {'tutors': tutors})
 
 def tutor_detail(request, slug):
-    tutor = get_object_or_404(CustomUser, slug=slug, role = 'tutor')
+    tutor = get_object_or_404(CustomUser, slug=slug, role='tutor')
 
     if request.method == 'POST':
+        print('--- POST received ---')
         datetime_value = request.POST.get('datetime')
-        if request.user.is_authenticated and request.user.role == 'student':
-            Booking.objects.create(
-                student=request.user,
-                tutor=tutor,
-                datetime=datetime_value,
-                status='pending'
-            )
-            return HttpResponseRedirect(request.path_info)
+        print('datetime from form:', datetime_value)
+        print('user:', request.user.username)
+        print('role:', getattr(request.user, 'role', None))
+
+        if request.user.is_authenticated and getattr(request.user, 'role', None) == 'student':
+            try:
+                datetime_obj = datetime.strptime(datetime_value, "%Y-%m-%dT%H:%M")
+                Booking.objects.create(
+                    student=request.user,
+                    tutor=tutor,
+                    datetime=datetime_obj,
+                    status='pending'
+                )
+                print('✅ Booking created')
+                return HttpResponseRedirect(request.path_info)
+            except Exception as e:
+                print('❌ Error during booking:', e)
 
     context = {'tutor': tutor}
-    return  render(request, 'tutors/tutor_detail.html', context)
+    return render(request, 'tutors/tutor_detail.html', context)
