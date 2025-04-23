@@ -69,7 +69,7 @@ def cancel_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
     if request.user.is_authenticated and request.user.role == 'student' and booking.student == request.user:
-        booking.student = 'cancelled'
+        booking.status = 'cancelled'
         booking.save()
 
     return HttpResponseRedirect('/my-bookings/')
