@@ -1,5 +1,15 @@
 <h1>My reservations</h1>
 
+<form method="get" style="margin-bottom: 20px;">
+  <label for="status">Filter by status:</label>
+  <select name="status" id="status" onchange="this.form.submit()">
+    <option value="">All</option>
+    <option value="pending" {% if request.GET.status =='pending' %} selected {% endif %}>Pending</option>
+    <option value="confirmed" {% if request.GET.status =='confirmed' %} selected {% endif %}>Confirmed</option>
+    <option value="cancelled" {% if request.GET.status =='cancelled' %} selected {% endif %}>Cancelled</option>
+  </select>
+</form>
+
 {% if bookings %}
   {% for booking in bookings %}
     <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
@@ -35,8 +45,8 @@
           <button type="submit" style="color: green;">Confirm</button>
         </form>
       {% endif %}
+      </div>
       {% endfor %}
     {% else %}
       <p>😔 You don’t have any bookings yet.</p>
     {% endif %}
-    </div>
