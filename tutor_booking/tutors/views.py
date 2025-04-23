@@ -54,7 +54,7 @@ def tutor_detail(request, slug):
 
 def my_bookings(request):
     if not request.user.is_authenticated:
-        return  redirect('tutor_list')
+        return redirect('tutor_list')
 
     if request.user.role == 'student':
         bookings = Booking.objects.filter(student=request.user)
@@ -63,7 +63,13 @@ def my_bookings(request):
     else:
         bookings = Booking.objects.none()
 
+    # 🔍 фильтрация по статусу
+    status_filter = request.GET.get('status')
+    if status_filter in ['pending', 'confirmed', 'cancelled']:
+        bookings = bookings.filter(status=status_filter)
+
     return render(request, 'tutors/my_bookings.html', {'bookings': bookings})
+
 
 def cancel_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)

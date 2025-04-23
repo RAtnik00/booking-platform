@@ -11,7 +11,7 @@
         <p><strong>From student:</strong> {{ booking.student.username }}</p>
       {% endif %}
 
-      <p>
+            <p>
         <strong>Status:</strong>
         {% if booking.status == 'pending' %}
           <span style="color: orange;">🟡 Pending</span>
@@ -26,6 +26,13 @@
         <form method="post" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
           {% csrf_token %}
           <button type="submit" style="color: red;">Cancel</button>
+        </form>
+      {% endif %}
+
+      {% if request.user.role == 'tutor' and booking.status == 'pending' %}
+        <form method="post" action="{% url 'confirm_booking' booking.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" style="color: green;">Confirm</button>
         </form>
       {% endif %}
       {% endfor %}
