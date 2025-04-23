@@ -73,3 +73,12 @@ def cancel_booking(request, booking_id):
         booking.save()
 
     return HttpResponseRedirect('/my-bookings/')
+
+def confirm_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.user.is_authenticated and request.user.role == 'tutor' and booking.tutor == request.user:
+        booking.status = 'confirmed'
+        booking.save()
+
+    return HttpResponseRedirect('/my-bookings/')
