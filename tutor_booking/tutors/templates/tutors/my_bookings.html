@@ -21,8 +21,15 @@
           <span style="color: gray;">🔴 Cancelled</span>
         {% endif %}
       </p>
+
+      {% if request.user.role == 'student' and booking.status != 'cancelled' %}
+        <form method="post" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" style="color: red;">Cancel</button>
+        </form>
+      {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>😔 You don’t have any bookings yet.</p>
+    {% endif %}
     </div>
-  {% endfor %}
-{% else %}
-  <p>😔 You don’t have any bookings yet.</p>
-{% endif %}
