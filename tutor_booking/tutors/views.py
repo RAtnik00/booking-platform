@@ -5,6 +5,7 @@ from .models import Booking
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import student_required, tutor_required
+from django.utils import timezone
 
 def tutor_list(request):
     filters = {}
@@ -40,14 +41,20 @@ def tutor_detail(request, slug):
         if request.user.is_authenticated and getattr(request.user, 'role', None) == 'student':
             try:
                 datetime_obj = datetime.strptime(datetime_value, "%Y-%m-%dT%H:%M")
-                Booking.objects.create(
-                    student=request.user,
-                    tutor=tutor,
-                    datetime=datetime_obj,
-                    status='pending'
-                )
-                print('✅ Booking created')
-                return HttpResponseRedirect(request.path_info)
+
+                if datetime_obj > timezone.now():
+                    Booking.objects.create(
+                        student=request.user,
+                        tutor=tutor,
+                        datetime=datetime_obj,
+                        status='pending'
+                    )
+                    print('✅ Booking created')
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    print('❌ Attempt to book past date')
+                    return HttpResponseRedirect(f"{request.path_info}?error=past_date")
+
             except Exception as e:
                 print('❌ Error during booking:', e)
 

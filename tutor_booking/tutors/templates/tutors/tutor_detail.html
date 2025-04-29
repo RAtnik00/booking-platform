@@ -1,5 +1,11 @@
 <h1>{{ tutor.username }}</h1>
 
+{% if request.GET.error == 'past_date' %}
+  <p style="color: red;"><strong>❗ You cannot book a past date.</strong></p>
+{% endif %}
+
+
+
 <p><strong>Bio:</strong> {{ tutor.tutor_profile.bio }}</p>
 <p><strong>Subjects:</strong> {{ tutor.tutor_profile.subjects }}</p>
 <p><strong>Experience:</strong> {{ tutor.tutor_profile.experience_years }} year</p>
@@ -11,5 +17,14 @@
     <input type="datetime-local" name="datetime" required>
     <button type="submit">To enrol</button>
 </form>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("input[name='datetime']", {
+        enableTime: true,
+        dateFormat: "Y-m-d\\TH:i",
+        minDate: "today"
+    });
+</script>
 
 <a href="{% url 'tutor_list' %}" style="margin-top: 10px; display: inline-block;">← Back to list</a>
