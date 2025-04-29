@@ -1,0 +1,11 @@
+<h1>Welcome to the Booking Platform!</h1>
+
+{% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}!</p>
+    <a href="{% url 'tutor_list' %}">View Tutors</a><br>
+    <a href="{% url 'my_bookings' %}">My Booking</a><br>
+    <a href="{% url 'logout' %}">Log out</a>
+{% else %}
+    <a href="{% url 'login' %}">Login</a><br>
+    <a href="{% url 'register' %}">Register</a>
+{% endif %}

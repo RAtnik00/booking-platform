@@ -100,3 +100,6 @@ def confirm_booking(request, booking_id):
         booking.save()
 
     return HttpResponseRedirect('/my-bookings/')
+
+def home_view(request):
+    return render(request, 'tutors/home.html')
