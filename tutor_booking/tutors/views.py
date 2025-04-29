@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Booking
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import student_required, tutor_required
 
 def tutor_list(request):
     filters = {}
@@ -52,6 +54,8 @@ def tutor_detail(request, slug):
     context = {'tutor': tutor}
     return render(request, 'tutors/tutor_detail.html', context)
 
+@login_required(login_url='/accounts/login/')
+@student_required
 def my_bookings(request):
     if not request.user.is_authenticated:
         return redirect('tutor_list')
@@ -63,7 +67,6 @@ def my_bookings(request):
     else:
         bookings = Booking.objects.none()
 
-    # 🔍 фильтрация по статусу
     status_filter = request.GET.get('status')
     if status_filter in ['pending', 'confirmed', 'cancelled']:
         bookings = bookings.filter(status=status_filter)
@@ -80,6 +83,8 @@ def cancel_booking(request, booking_id):
 
     return HttpResponseRedirect('/my-bookings/')
 
+@login_required(login_url='/accounts/login/')
+@tutor_required
 def confirm_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
