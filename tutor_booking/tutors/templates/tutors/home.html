@@ -1,19 +1,38 @@
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<h1 class="text-4xl font-bold text-blue-600">Welcome to the Booking Platform!</h1>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
 
-{% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}!</p>
-    <a href="{% url 'tutor_list' %}">View Tutors</a><br>
-    <a href="{% url 'my_bookings' %}">My Booking</a><br>
-        <form method="post" action="{% url 'logout' %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" style="background: none; border: none; color: blue; cursor: pointer;">Log out</button>
+  <div class="text-center bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+    <h1 class="text-4xl font-bold mb-6 text-gray-800">Welcome to Booking Platform!</h1>
+
+    {% if user.is_authenticated %}
+      <p class="mb-6 text-gray-600">Hello, {{ user.username }}!</p>
+      <div class="space-y-4">
+        <a href="{% url 'tutor_list' %}" class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded">
+          View Tutors
+        </a>
+        <a href="{% url 'my_bookings' %}" class="block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded">
+          My Bookings
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded mt-4">
+            Log out
+          </button>
         </form>
+      </div>
+    {% else %}
+      <div class="space-y-4">
+        <a href="{% url 'login' %}" class="block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded">
+          Log in
+        </a>
+        <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded">
+          Sign up
+        </a>
+      </div>
+    {% endif %}
+  </div>
 
-{% else %}
-    <a href="{% url 'login' %}">Login</a><br>
-    <a href="{% url 'register' %}">Register</a>
-{% endif %}
+</body>

@@ -1,56 +1,66 @@
-<h1>My reservations</h1>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-<form method="get" style="margin-bottom: 20px;">
-  <label for="status">Filter by status:</label>
-  <select name="status" id="status" onchange="this.form.submit()">
-    <option value="">All</option>
-    <option value="pending" {% if request.GET.status == 'pending' %} selected {% endif %}>Pending</option>
-    <option value="confirmed" {% if request.GET.status == 'confirmed' %} selected {% endif %}>Confirmed</option>
-    <option value="cancelled" {% if request.GET.status == 'cancelled' %} selected {% endif %}>Cancelled</option>
+<body class="bg-gray-100 min-h-screen py-10">
 
-  </select>
-</form>
+  <div class="max-w-4xl mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">My Bookings</h1>
 
-{% if bookings %}
-  {% for booking in bookings %}
-    <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
-      <p><strong>Date and time:</strong> {{ booking.datetime|date:"F d, Y, H:i" }}</p>
+    {% if bookings %}
+      <div class="space-y-6">
+        {% for booking in bookings %}
+          <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+            <p class="text-gray-700 mb-1">
+              <strong>Date:</strong> {{ booking.datetime|date:"F d, Y – H:i" }}
+            </p>
 
-      {% if request.user.role == 'student' %}
-        <p><strong>To tutor:</strong> {{ booking.tutor.username }}</p>
-      {% elif request.user.role == 'tutor' %}
-        <p><strong>From student:</strong> {{ booking.student.username }}</p>
-      {% endif %}
+            {% if request.user.role == 'student' %}
+              <p class="text-gray-700 mb-1"><strong>To tutor:</strong> {{ booking.tutor.username }}</p>
+            {% elif request.user.role == 'tutor' %}
+              <p class="text-gray-700 mb-1"><strong>From student:</strong> {{ booking.student.username }}</p>
+            {% endif %}
 
-            <p>
-        <strong>Status:</strong>
-        {% if booking.status == 'pending' %}
-          <span style="color: orange;">🟡 Pending</span>
-        {% elif booking.status == 'confirmed' %}
-          <span style="color: green;">🟢 Confirmed</span>
-        {% elif booking.status == 'cancelled' %}
-          <span style="color: gray;">🔴 Cancelled</span>
-        {% endif %}
-      </p>
+            <p class="mb-3">
+              <strong>Status:</strong>
+              {% if booking.status == 'pending' %}
+                <span class="text-orange-500 font-semibold">🟡 Pending</span>
+              {% elif booking.status == 'confirmed' %}
+                <span class="text-green-600 font-semibold">🟢 Confirmed</span>
+              {% elif booking.status == 'cancelled' %}
+                <span class="text-gray-500 font-semibold">🔴 Cancelled</span>
+              {% endif %}
+            </p>
 
-      {% if request.user.role == 'student' and booking.status != 'cancelled' %}
-        <form method="post" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
-          {% csrf_token %}
-          <button type="submit" style="color: red;">Cancel</button>
-        </form>
-      {% endif %}
+            <div class="flex space-x-4">
+              {% if request.user.role == 'student' and booking.status != 'cancelled' %}
+                <form method="post" action="{% url 'cancel_booking' booking.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                    Cancel
+                  </button>
+                </form>
+              {% endif %}
 
-      {% if request.user.role == 'tutor' and booking.status == 'pending' %}
-        <form method="post" action="{% url 'confirm_booking' booking.id %}" style="display:inline;">
-          {% csrf_token %}
-          <button type="submit" style="color: green;">Confirm</button>
-        </form>
-      {% endif %}
+              {% if request.user.role == 'tutor' and booking.status == 'pending' %}
+                <form method="post" action="{% url 'confirm_booking' booking.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    Confirm
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     {% else %}
-      <p>😔 You don’t have any bookings yet.</p>
+      <p class="text-center text-gray-600">😔 You don’t have any bookings yet.</p>
     {% endif %}
-{% if user.is_authenticated %}
-  <p>Logged in as {{ user.username }} — <a href="{% url 'logout' %}">Log out</a></p>
-{% endif %}
+  </div>
+  <div class="mt-10 text-center">
+    <a href="{% url 'home' %}" class="inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">
+      ← Back to Home
+    </a>
+  </div>
+</body>
