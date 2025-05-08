@@ -112,7 +112,6 @@ Dla użytkownika `jan_tutor` zostanie automatycznie utworzony profil nauczyciela
 
 Zespół projektowy studentów:  
 - Dmitriy Yaremenko  
-- [Dodaj imiona pozostałych członków zespołu, jeśli są]
 
 ---
 
