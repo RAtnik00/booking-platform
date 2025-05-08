@@ -3,34 +3,56 @@
 ## Spis treści
 
 1. [Opis projektu](#opis-projektu)  
-2. [Funkcjonalności](#funkcjonalności)  
-3. [Instrukcja uruchomienia aplikacji](#instrukcja-uruchomienia-aplikacji)  
+2. [Technologie i biblioteki](#technologie-i-biblioteki)  
+3. [Funkcjonalności](#funkcjonalności)  
+4. [Instrukcja uruchomienia aplikacji](#instrukcja-uruchomienia-aplikacji)  
    - [Lokalnie (bez Dockera)](#lokalnie-bez-dockera)  
    - [Przez Docker](#przez-docker)  
-4. [Struktura aplikacji (MVC)](#struktura-aplikacji-mvc)  
-5. [Przykładowe dane](#przykładowe-dane)  
+5. [Architektura aplikacji (MVC)](#architektura-aplikacji-mvc)  
+6. [Przykładowe dane](#przykładowe-dane)  
+7. [Autorzy](#autorzy)  
 
 ---
 
 ## Opis projektu
 
-Aplikacja umożliwia studentom rezerwację zajęć z wybranymi korepetytorami. System pozwala na przeglądanie listy dostępnych nauczycieli, przegląd profili, a także rezerwowanie i zarządzanie spotkaniami. Została zaimplementowana autoryzacja użytkowników z wyborem roli: student lub korepetytor.
+Aplikacja umożliwia rezerwację indywidualnych zajęć z korepetytorami. Użytkownicy (studenci) mogą przeglądać listę nauczycieli, sprawdzać ich profile oraz rezerwować spotkania online. Korepetytorzy mogą zarządzać swoją dostępnością i zatwierdzać lub odrzucać rezerwacje.
 
-Projekt został zrealizowany w technologii Django (Python) z użyciem wzorca architektonicznego **MVC**.
+Projekt stworzony został z użyciem frameworka **Django** i wzorca architektonicznego **MVC**, z wykorzystaniem **Docker** i podziałem ról użytkowników.
+
+---
+
+## Technologie i biblioteki
+
+- **Python 3.12+**
+- **Django** — framework backendowy oparty na MVC
+- **PostgreSQL** — relacyjna baza danych
+- **Docker & Docker Compose** — konteneryzacja i łatwe uruchamianie środowiska
+- **HTML5 + CSS3 + Bootstrap** — stylizacja i responsywny frontend
+- **Django Templates** — dynamiczne szablony HTML
+- **Django Auth** — system logowania i zarządzania użytkownikami
+- **Role-based Access Control** — różne widoki i akcje zależne od roli użytkownika
+- **Custom Forms + Validation** — własne formularze z walidacją po stronie serwera
+- **Filtrowanie danych w widokach** — filtrowanie rezerwacji po statusie
+- **Panel administratora Django** — zarządzanie danymi przez admina
+- **Django Messages Framework** — komunikaty systemowe (np. sukces, błąd)
+- **Periodic Timer / Cron (opcjonalnie)** — automatyczne odświeżanie list (jeśli dotyczy)
+- **pytest / Django TestCase (opcjonalnie)** — możliwość testowania
 
 ---
 
 ## Funkcjonalności
 
-- Rejestracja i logowanie użytkowników z wyborem roli (student / korepetytor)
-- Przeglądanie listy dostępnych korepetytorów
-- Strona profilu korepetytora (widok szczegółowy)
-- Rezerwacja spotkań z korepetytorami
-- Historia i zarządzanie rezerwacjami
-- Filtrowanie rezerwacji według statusu
-- Możliwość ponownego rezerwowania spotkań
-- Obsługa sesji użytkownika
-- Uruchamianie aplikacji lokalnie oraz w kontenerze Docker
+- ✅ Rejestracja i logowanie z wyborem roli (student / korepetytor)
+- ✅ Panel użytkownika z listą rezerwacji
+- ✅ Filtrowanie rezerwacji według statusu
+- ✅ Profil korepetytora z opisem i szczegółami
+- ✅ Formularz rezerwacji zajęć
+- ✅ Potwierdzanie / odrzucanie rezerwacji przez korepetytora
+- ✅ Możliwość ponownej rezerwacji spotkania
+- ✅ Obsługa sesji użytkownika i ograniczenie dostępu
+- ✅ Stylizacja widoków z Bootstrap
+- ✅ Uruchamianie aplikacji w kontenerze Docker
 
 ---
 
@@ -41,3 +63,4 @@ Projekt został zrealizowany w technologii Django (Python) z użyciem wzorca arc
 1. Zainstaluj zależności:
    ```bash
    pip install -r requirements.txt
+
