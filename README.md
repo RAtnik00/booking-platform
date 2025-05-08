@@ -111,7 +111,7 @@ Dla użytkownika `jan_tutor` zostanie automatycznie utworzony profil nauczyciela
 ## Autorzy
 
 Zespół projektowy studentów:  
-- Dmitriy Yaremenko  
+- Dmytro Yaremenko  
 
 ---
 
