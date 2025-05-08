@@ -1,30 +1,58 @@
-<h1>{{ tutor.username }}</h1>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
 
-{% if request.GET.error == 'past_date' %}
-  <p style="color: red;"><strong>❗ You cannot book a past date.</strong></p>
-{% endif %}
+<body class="bg-gray-100 min-h-screen py-10">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
 
+    <h1 class="text-3xl font-bold mb-4 text-gray-800 text-center">{{ tutor.username }}</h1>
 
+    {% if request.GET.error == 'past_date' %}
+      <p class="bg-red-100 text-red-700 text-center p-2 rounded mb-4 font-semibold">
+        ❗ You cannot book a past date.
+      </p>
+    {% endif %}
 
-<p><strong>Bio:</strong> {{ tutor.tutor_profile.bio }}</p>
-<p><strong>Subjects:</strong> {{ tutor.tutor_profile.subjects }}</p>
-<p><strong>Experience:</strong> {{ tutor.tutor_profile.experience_years }} year</p>
-<p><strong>Price:</strong> {{ tutor.tutor_profile.price_per_hour }}$</p>
+    <div class="space-y-2 text-gray-700">
+      <p><strong>Bio:</strong> {{ tutor.tutor_profile.bio|default:"Not specified" }}</p>
+      <p><strong>Subjects:</strong> {{ tutor.tutor_profile.subjects|default:"Not specified" }}</p>
+      <p><strong>Experience:</strong>
+        {% if tutor.tutor_profile.experience_years %}
+          {{ tutor.tutor_profile.experience_years }} year(s)
+        {% else %}
+          Not specified
+        {% endif %}
+      </p>
+      <p><strong>Price:</strong>
+        {% if tutor.tutor_profile.price_per_hour %}
+          ${{ tutor.tutor_profile.price_per_hour }}
+        {% else %}
+          Not specified
+        {% endif %}
+      </p>
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    <label id="datetime">Date and time of the lesson:</label>
-    <input type="datetime-local" name="datetime" required>
-    <button type="submit">To enrol</button>
-</form>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
+    <form method="post" class="mt-6">
+      {% csrf_token %}
+      <label class="block mb-1 text-sm font-semibold text-gray-700">Date and time of the lesson:</label>
+      <input type="datetime-local" name="datetime" required class="w-full border rounded px-3 py-2 mb-4" />
+      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
+        To enrol
+      </button>
+    </form>
+
+    <div class="mt-4 text-center">
+      <a href="{% url 'tutor_list' %}" class="text-blue-600 hover:underline">← Back to list</a>
+    </div>
+  </div>
+
+  <script>
     flatpickr("input[name='datetime']", {
-        enableTime: true,
-        dateFormat: "Y-m-d\\TH:i",
-        minDate: "today"
+      enableTime: true,
+      dateFormat: "Y-m-d\\TH:i",
+      minDate: "today"
     });
-</script>
-
-<a href="{% url 'tutor_list' %}" style="margin-top: 10px; display: inline-block;">← Back to list</a>
+  </script>
+</body>

@@ -6,6 +6,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import student_required, tutor_required
 from django.utils import timezone
+from django.utils.timezone import make_aware
 
 def tutor_list(request):
     filters = {}
@@ -40,7 +41,8 @@ def tutor_detail(request, slug):
 
         if request.user.is_authenticated and getattr(request.user, 'role', None) == 'student':
             try:
-                datetime_obj = datetime.strptime(datetime_value, "%Y-%m-%dT%H:%M")
+                naive_dt = datetime.strptime(datetime_value, "%Y-%m-%dT%H:%M")
+                datetime_obj = make_aware(naive_dt)
 
                 if datetime_obj > timezone.now():
                     Booking.objects.create(
@@ -62,7 +64,6 @@ def tutor_detail(request, slug):
     return render(request, 'tutors/tutor_detail.html', context)
 
 @login_required(login_url='/accounts/login/')
-@student_required
 def my_bookings(request):
     if not request.user.is_authenticated:
         return redirect('tutor_list')
