@@ -11,6 +11,7 @@
 5. [Architektura aplikacji (MVC)](#architektura-aplikacji-mvc)  
 6. [Przykładowe dane](#przykładowe-dane)  
 7. [Autorzy](#autorzy)  
+8. [Stan projektu i rekomendacje](#stan-projektu-i-rekomendacje)  
 
 ---
 
@@ -28,16 +29,15 @@ Projekt stworzony został z użyciem frameworka **Django** i wzorca architektoni
 - **Django** — framework backendowy oparty na MVC
 - **PostgreSQL** — relacyjna baza danych
 - **Docker & Docker Compose** — konteneryzacja i łatwe uruchamianie środowiska
-- **HTML5 + CSS3 + Bootstrap** — stylizacja i responsywny frontend
+- **HTML5 + CSS3 + Tailwind** — stylizacja i responsywny frontend
 - **Django Templates** — dynamiczne szablony HTML
 - **Django Auth** — system logowania i zarządzania użytkownikami
 - **Role-based Access Control** — różne widoki i akcje zależne od roli użytkownika
-- **Custom Forms + Validation** — własne formularze z walidacją po stronie serwera
+- **Custom Forms + Validation** — własne formularze z walidacją po stronie serwera i klienta
 - **Filtrowanie danych w widokach** — filtrowanie rezerwacji po statusie
 - **Panel administratora Django** — zarządzanie danymi przez admina
-- **Django Messages Framework** — komunikaty systemowe (np. sukces, błąd)
-- **Periodic Timer / Cron (opcjonalnie)** — automatyczne odświeżanie list (jeśli dotyczy)
-- **pytest / Django TestCase (opcjonalnie)** — możliwość testowania
+- **Django Messages Framework** — komunikaty systemowe
+- **Unit testy** — podstawowe testy formularzy i modeli
 
 ---
 
@@ -51,8 +51,11 @@ Projekt stworzony został z użyciem frameworka **Django** i wzorca architektoni
 - ✅ Potwierdzanie / odrzucanie rezerwacji przez korepetytora
 - ✅ Możliwość ponownej rezerwacji spotkania
 - ✅ Obsługa sesji użytkownika i ograniczenie dostępu
-- ✅ Stylizacja widoków z Bootstrap
+- ✅ Stylizacja widoków z TailwindCSS
 - ✅ Uruchamianie aplikacji w kontenerze Docker
+- ✅ Przykładowe dane testowe (fixture)
+- ✅ Walidacja danych w formularzach po stronie klienta i serwera
+- ✅ Testy jednostkowe: `TutorProfile`, formularze
 
 ---
 
@@ -60,7 +63,76 @@ Projekt stworzony został z użyciem frameworka **Django** i wzorca architektoni
 
 ### Lokalnie (bez Dockera)
 
-1. Zainstaluj zależności:
-   ```bash
-   pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
 
+### Przez Docker
+
+```bash
+docker-compose up --build
+```
+
+Aplikacja dostępna będzie pod adresem:
+```
+http://localhost:8000/
+```
+
+---
+
+## Architektura aplikacji (MVC)
+
+- **Model (M)** – `CustomUser`, `TutorProfile`
+- **View (V)** – szablony HTML: listy korepetytorów, formularze, panel rezerwacji
+- **Controller (C)** – widoki funkcjonalne i klasowe Django (`views.py`)
+
+---
+
+## Przykładowe dane
+
+Aby załadować przykładowych użytkowników do bazy danych, wykonaj:
+
+```bash
+python manage.py loaddata example_data.json
+```
+
+Zostaną dodani trzej użytkownicy:
+
+- 👨‍🏫 `jan_tutor` – rola: *korepetytor*
+- 👩‍🎓 `anna_student` – rola: *student*
+- 👨‍🎓 `piotr_student` – rola: *student*
+
+Dla użytkownika `jan_tutor` zostanie automatycznie utworzony profil nauczyciela (`TutorProfile`), dzięki mechanizmowi sygnałów Django (`signals.py`).
+
+---
+
+## Autorzy
+
+Zespół projektowy studentów:  
+- Dmitriy Yaremenko  
+- [Dodaj imiona pozostałych członków zespołu, jeśli są]
+
+---
+
+## Stan projektu i rekomendacje
+
+Projekt spełnia wszystkie wymagania podstawowe oraz zawiera rozszerzenia, które pozwalają na uzyskanie wyższej oceny:
+
+✅ Architektura MVC (Model–View–Controller)  
+✅ Obsługa ról użytkowników (student / tutor)  
+✅ Filtrowanie i historia rezerwacji  
+✅ Formularze z walidacją po stronie serwera i klienta  
+✅ Stylizacja Tailwind CSS  
+✅ Konteneryzacja z Docker i docker-compose  
+✅ Fixture z przykładowymi użytkownikami  
+✅ Testy jednostkowe (formularz + profil nauczyciela)
+
+🎯 Rekomendujemy przed obroną:
+- Pokazać działanie formularzy i walidacji
+- Pokaż w adminie utworzonych użytkowników z fixture
+- Jeśli możliwe — zademonstrować działanie Dockera
+- Zaznaczyć, że `TutorProfile` tworzy się automatycznie dzięki `signals.py`
+
+📌 Projekt jest gotowy do obrony i prezentacji.

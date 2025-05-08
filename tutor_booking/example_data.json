@@ -1,0 +1,37 @@
+[
+  {
+    "model": "accounts.customuser",
+    "pk": 1,
+    "fields": {
+      "username": "jan_tutor",
+      "password": "pbkdf2_sha256$216000$example$hashhashhash",
+      "role": "tutor",
+      "slug": "jan-tutor",
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.customuser",
+    "pk": 2,
+    "fields": {
+      "username": "anna_student",
+      "password": "pbkdf2_sha256$216000$example$hashhashhash",
+      "role": "student",
+      "slug": "anna-student",
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.customuser",
+    "pk": 3,
+    "fields": {
+      "username": "piotr_student",
+      "password": "pbkdf2_sha256$216000$example$hashhashhash",
+      "role": "student",
+      "slug": "piotr-student",
+      "is_active": true
+    }
+  }
+]
+
+
