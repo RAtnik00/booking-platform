@@ -160,5 +160,3 @@ Projekt spełnia wszystkie wymagania podstawowe oraz zawiera rozszerzenia, któr
 - Pokaż w adminie utworzonych użytkowników z fixture
 - Jeśli możliwe — zademonstrować działanie Dockera
 - Zaznaczyć, że `TutorProfile` tworzy się automatycznie dzięki `signals.py`
-
-📌 Projekt jest gotowy do obrony i prezentacji.
