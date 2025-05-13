@@ -10,7 +10,7 @@
    - [Przez Docker](#przez-docker)  
 5. [Architektura aplikacji (MVC)](#architektura-aplikacji-mvc)  
 6. [Przykładowe dane](#przykładowe-dane)  
-7. [Autorzy](#autorzy)  
+7. [Autor](#autor)  
 8. [Stan projektu i rekomendacje](#stan-projektu-i-rekomendacje)  
 
 ---
@@ -63,11 +63,40 @@ Projekt stworzony został z użyciem frameworka **Django** i wzorca architektoni
 
 ### Lokalnie (bez Dockera)
 
+1. Utwórz i aktywuj środowisko wirtualne:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate    # Windows
+```
+
+2. Zainstaluj wymagane biblioteki:
+
 ```bash
 pip install -r requirements.txt
+```
+
+3. Wykonaj migracje bazy danych:
+
+```bash
 python manage.py migrate
+```
+
+4. (Opcjonalnie) Załaduj przykładowe dane:
+
+```bash
+python manage.py loaddata example_data.json
+```
+
+5. Uruchom serwer deweloperski:
+
+```bash
 python manage.py runserver
 ```
+
+Aplikacja będzie dostępna pod adresem:  
+http://localhost:8000/
 
 ### Przez Docker
 
@@ -75,10 +104,8 @@ python manage.py runserver
 docker-compose up --build
 ```
 
-Aplikacja dostępna będzie pod adresem:
-```
+Aplikacja dostępna będzie pod adresem:  
 http://localhost:8000/
-```
 
 ---
 
@@ -108,11 +135,10 @@ Dla użytkownika `jan_tutor` zostanie automatycznie utworzony profil nauczyciela
 
 ---
 
-## Autorzy
+## Autor
 
-Zespół projektowy studentów:  
-- Dmitriy Yaremenko  
-- [Dodaj imiona pozostałych członków zespołu, jeśli są]
+Autor projektu:  
+- Dmytro Yaremenko
 
 ---
 
