@@ -34,6 +34,7 @@ class StudentProfileForm(forms.ModelForm):
 class TutorProfileForm(forms.ModelForm):
     username = forms.CharField(
         max_length=150,
+        required=False,
         widget=forms.TextInput(attrs={
             'class': 'w-full px-4 py-2 border border-gray-300 rounded shadow focus:outline-none focus:ring-2 focus:ring-blue-500'
         })
