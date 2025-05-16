@@ -154,9 +154,3 @@ Projekt spełnia wszystkie wymagania podstawowe oraz zawiera rozszerzenia, któr
 ✅ Konteneryzacja z Docker i docker-compose  
 ✅ Fixture z przykładowymi użytkownikami  
 ✅ Testy jednostkowe (formularz + profil nauczyciela)
-
-🎯 Rekomendujemy przed obroną:
-- Pokazać działanie formularzy i walidacji
-- Pokaż w adminie utworzonych użytkowników z fixture
-- Jeśli możliwe — zademonstrować działanie Dockera
-- Zaznaczyć, że `TutorProfile` tworzy się automatycznie dzięki `signals.py`
