@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.decorators import student_required, tutor_required
 from django.utils import timezone
 from django.utils.timezone import make_aware
+from django.contrib import messages
 
 def tutor_list(request):
     filters = {}
@@ -51,10 +52,10 @@ def tutor_detail(request, slug):
                         datetime=datetime_obj,
                         status='pending'
                     )
-                    print('✅ Booking created')
+                    messages.success(request, '✅ Booking request sent successfully!')
                     return HttpResponseRedirect(request.path_info)
                 else:
-                    print('❌ Attempt to book past date')
+                    messages.error(request, '❌ You cannot book a lesson in the past.')
                     return HttpResponseRedirect(f"{request.path_info}?error=past_date")
 
             except Exception as e:

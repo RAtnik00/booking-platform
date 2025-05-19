@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from accounts.forms import UserRegistrationForm, TutorProfileForm, StudentProfileForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def register_view(request):
     if request.method == 'POST':
@@ -27,7 +28,8 @@ def edit_profile_view(request):
             form = TutorProfileForm(request.POST, instance=profile, user=user)
             if form.is_valid():
                 form.save()
-                return redirect('dashboard')
+                messages.success(request, '✅ Profile updated successfully!')
+                return redirect('edit_profile')
         else:
             form = TutorProfileForm(instance=profile, user=user)
 
@@ -36,7 +38,8 @@ def edit_profile_view(request):
             form = StudentProfileForm(request.POST, instance=user)
             if form.is_valid():
                 form.save()
-                return redirect('dashboard')
+                messages.success(request, '✅ Profile updated successfully!')
+                return redirect('edit_profile')
         else:
             form = StudentProfileForm(instance=user)
 
@@ -45,7 +48,9 @@ def edit_profile_view(request):
 
     return render(request, 'accounts/edit_profile.html', {'form': form})
 
+
 @login_required
 def dashboard_view(request):
     return redirect('edit_profile')
+
 
